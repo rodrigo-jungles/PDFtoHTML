@@ -8,4 +8,4 @@ Pipeline de Dados: Estrutura o fluxo em etapas (PDF > HTML > TXT) para garantir 
 Otimização de Fluxo: Ideal para preparo de datasets ou extração de relatórios automatizados.
 
 Tecnologias Utilizadas
-Python | PyMuPDF, os|
+Python | PyMuPDF, os |
