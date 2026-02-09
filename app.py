@@ -1,9 +1,9 @@
 import os
 import fitz  # PyMuPDF
 
-
+#Extrai texto do PDF em formato simples
 def pdf_para_texto(pdf_path, output_txt):
-    """Extrai texto do PDF em formato simples para IA"""
+    
     doc = fitz.open(pdf_path)
     texto_completo = []
 
@@ -23,13 +23,13 @@ def pdf_to_html_absolute(pdf_path, output_html):
         width = page.rect.width
         height = page.rect.height
 
-        # Cria o "canvas" da página
+        # Cria a página
         html_content.append(f"""
         <div id='page-{page_num}' style='position: relative; width: {width}px; height: {height}px; 
              background-color: white; margin: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.5); overflow: hidden;'>
         """)
 
-        # Extrai os blocos de conteúdo
+        # Extrai os blocos de texto
         page_dict = page.get_text("dict")
         for block in page_dict["blocks"]:
             if "lines" in block:  # Se for um bloco de texto
@@ -51,12 +51,11 @@ def pdf_to_html_absolute(pdf_path, output_html):
                         html_content.append(
                             f"<span style='{style}'>{text}</span>")
 
-            elif "image" in block:  # Se for uma imagem
-                bbox = block["bbox"]  # [x0, y0, x1, y1]
+            elif "image" in block:  
+                bbox = block["bbox"]  
                 img_width = bbox[2] - bbox[0]
                 img_height = bbox[3] - bbox[1]
 
-                # Para uma versão completa, precisaríamos salvar a imagem em bytes/base64
                 html_content.append(f"""
                 <div style='position: absolute; left: {bbox[0]}px; top: {bbox[1]}px; 
                      width: {img_width}px; height: {img_height}px; border: 1px dashed red;'>
@@ -71,8 +70,7 @@ def pdf_to_html_absolute(pdf_path, output_html):
     with open(output_html, "w", encoding="utf-8") as f:
         f.write("\n".join(html_content))
 
-
-# Execução - processa todos os PDFs da pasta curriculos
+# Processamento de pasta específica para outro projeto, direciona que todos os arquivos sejam lidos 
 pasta = "curriculos"
 if os.path.exists(pasta):
     for arquivo in os.listdir(pasta):
